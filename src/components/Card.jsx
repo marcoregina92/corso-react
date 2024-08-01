@@ -1,4 +1,10 @@
-function Card({ title, imgUrl, children }) {
+function Card({ title, imgUrl, isVisited, children }) {
+
+    const visitedLabel = isVisited ? "visitata" : "non visitata";
+
+    const colorStyle = {
+        color: isVisited ? "green" : "red"
+    };
 
 
     return (
@@ -7,6 +13,7 @@ function Card({ title, imgUrl, children }) {
             <div className="flex flex-col p-4">
                 <h2 className="text-2xl text-white font-bold">{title}</h2>
                 <p className="text-gray-500">{children}</p>
+                <span style={colorStyle}>{visitedLabel}</span>
             </div>
         </div>
     )
