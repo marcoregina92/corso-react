@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ul {
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+}
+
+li {
+    margin-right: 30px;
+}
