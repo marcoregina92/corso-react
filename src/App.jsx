@@ -1,11 +1,27 @@
 import { useState } from 'react'
 import './App.css'
 import Card from './components/Card'
+import CardForm from './components/CardForm';
+
+function handleClick() {
+  alert("Ciao, sono una funzione che manda UN ALERT");
+}
+
+function handleChange(e) {
+  console.log(e.target.value);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  console.log(e);
+}
+
 
 function App() {
   const [count, setCount] = useState(0)
 
-  const cities = [
+
+  const [cities, setCities] = useState([
     {
       id: 0,
       isVisited: true,
@@ -34,16 +50,21 @@ function App() {
       imgUrl: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1773&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, a?"
     }
-  ];
+  ]);
+
+  const addCity = (city) => {
+    setCities([...cities, city])
+  }
 
 
   return (
     <>
+      <CardForm addCity={addCity}></CardForm>
       <div className='grid grid-cols-4 gap-10'>
 
         {/* Utilizzo di map */}
 
-        {/* {cities.map((city) => (
+        {cities.map((city) => (
           <Card
             // mettere sempre un key univoca per iterare
             key={city.id}
@@ -52,11 +73,11 @@ function App() {
             imgUrl={city.imgUrl}>
             {city.description}
           </Card>
-        ))} */}
+        ))}
 
         {/* Utilizzo di filter che filtra i dati */}
 
-
+        {/* 
         {cities
           .filter((city) => city.isVisited)
           .map((city) => (
@@ -68,7 +89,7 @@ function App() {
               imgUrl={city.imgUrl}>
               {city.description}
             </Card>
-          ))}
+          ))} */}
 
         {/* <Card
           isVisited={true}
@@ -97,14 +118,21 @@ function App() {
 
       </div>
 
-      <div className="card">
+      {/* <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
+        </button> */}
+      {/* quando si richiama una funzione con onclick non servono le () */}
+      {/* <button onClick={handleClick}>Alert</button>
+
+        <input type='text' onChange={handleChange} />
+
+        <form onSubmit={handleSubmit}>
+          <button type='submit'>Invia</button>
+        </form>
+
+
+      </div> */}
     </>
   )
 }
