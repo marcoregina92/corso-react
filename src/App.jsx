@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Card from './components/Card'
 import CardForm from './components/CardForm';
@@ -19,6 +19,19 @@ function handleSubmit(e) {
 
 function App() {
   const [count, setCount] = useState(0)
+
+
+  // state che serve per chiamate http
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(data => {
+        setData(data);
+        console.log(data);
+      })
+  }, []);
 
 
   const [cities, setCities] = useState([
@@ -74,10 +87,22 @@ function App() {
             {city.description}
           </Card>
         ))}
+      </div>
 
-        {/* Utilizzo di filter che filtra i dati */}
+      <div className='grid grid-cols-4 gap-10 mt-3'>
 
-        {/* 
+        {data.map((item) => (
+          <div key={item.id} className='bg-slate-400 rounded-lg p-3'>
+            <p className='text-red-600 mb-3'>userID: {item.userId}</p>
+            <h2 className='font-bold text-xl mb-3 text-white'> Title: {item.title}</h2>
+            <p className='text-grey-800 mb-3'>Message: {item.body}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Utilizzo di filter che filtra i dati */}
+
+      {/* 
         {cities
           .filter((city) => city.isVisited)
           .map((city) => (
@@ -91,7 +116,7 @@ function App() {
             </Card>
           ))} */}
 
-        {/* <Card
+      {/* <Card
           isVisited={true}
           title="Tokyo"
           imgUrl="https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?q=80&w=1768&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
@@ -116,7 +141,6 @@ function App() {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, a?
         </Card> */}
 
-      </div>
 
       {/* <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
@@ -133,6 +157,7 @@ function App() {
 
 
       </div> */}
+
     </>
   )
 }
